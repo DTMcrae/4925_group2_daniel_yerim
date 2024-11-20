@@ -29,7 +29,7 @@ public class Authentication : MonoBehaviour
     {
         textDisplaySignup.text = "Button Pressed";
 
-        StartCoroutine(PostLogin());
+        StartCoroutine(PostSignup());
     }
 
     private string userId;
@@ -67,7 +67,7 @@ public class Authentication : MonoBehaviour
         }
     }
 
-    public IEnumerator SignUpWebContent()
+    public IEnumerator PostSignup()
     {
         string url = "http://localhost:3030/signup";
         WWWForm formData = new WWWForm();

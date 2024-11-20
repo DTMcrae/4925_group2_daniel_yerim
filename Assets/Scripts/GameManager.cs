@@ -19,11 +19,12 @@ public class GameManager : MonoBehaviour
     {
         if(Instance != null)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
         else
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
 
