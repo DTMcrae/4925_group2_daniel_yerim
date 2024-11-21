@@ -18,11 +18,19 @@ public class Authentication : MonoBehaviour
     [SerializeField] TMP_InputField usernameFieldSignup;
     [SerializeField] TMP_InputField passwordFieldSignup;
 
+    private GameManager gameManager;
+
+    private void Awake()
+    {
+        gameManager = FindObjectOfType<GameManager>();
+    }
+
     public void LoginFunction()
     {
         textDisplayLogin.text = "Button Pressed";
 
         StartCoroutine(PostLogin());
+        gameManager.StartGame();
     }
 
     public void SignupFunction()

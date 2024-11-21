@@ -1,6 +1,7 @@
 using System.Collections;
 
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        if(Instance != null)
+        if (Instance != null)
         {
             Destroy(gameObject);
         }
@@ -37,6 +38,15 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         //Temporary Function, will be used once the game scene is loaded and ready to play
+        //SceneManager.LoadScene("New Scene");
+        //StartCoroutine(LoadAfterWait("New Scene", 3.0f));
+        SceneManager.LoadScene("GameScene");
+    }
+
+    IEnumerator LoadAfterWait(string scene, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(scene);
     }
 
     public void GameOver()
