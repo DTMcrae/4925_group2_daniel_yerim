@@ -18,19 +18,11 @@ public class Authentication : MonoBehaviour
     [SerializeField] TMP_InputField usernameFieldSignup;
     [SerializeField] TMP_InputField passwordFieldSignup;
 
-    private GameManager gameManager;
-
-    private void Awake()
-    {
-        gameManager = FindObjectOfType<GameManager>();
-    }
-
     public void LoginFunction()
     {
         textDisplayLogin.text = "Button Pressed";
 
         StartCoroutine(PostLogin());
-        gameManager.StartGame();
     }
 
     public void SignupFunction()
@@ -63,6 +55,9 @@ public class Authentication : MonoBehaviour
                 username = response.username;
 
                 textDisplayLogin.text = $"Welcome, {username} (ID: {userId})";
+
+                GameManager.Instance.SetUserDetails(username, int.Parse(userId));
+                GameManager.Instance.StartGame();
             }
             catch
             {
@@ -97,6 +92,8 @@ public class Authentication : MonoBehaviour
                 username = response.username;
 
                 textDisplaySignup.text = $"Account created for {username} (ID: {userId})";
+                GameManager.Instance.SetUserDetails(username, int.Parse(userId));
+                GameManager.Instance.StartGame();
             }
             catch
             {
