@@ -165,3 +165,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95d9d723e322c6d4593d6983935e8e65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreOnMiss: 10
+  livesLostOnCatch: -1

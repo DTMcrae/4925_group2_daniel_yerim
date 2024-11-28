@@ -102,6 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b0a5e4073d3b8b4c88bfcc1863ff930, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreOnCatch: 20
 --- !u!50 &2946596740065898781
 Rigidbody2D:
   serializedVersion: 5
@@ -114,7 +115,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.75
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
