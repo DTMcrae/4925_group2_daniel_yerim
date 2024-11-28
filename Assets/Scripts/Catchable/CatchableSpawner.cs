@@ -4,6 +4,7 @@ public class CatchableSpawner : MonoBehaviour
 {
     [Header("Stats")]
     [SerializeField] int maxObjects = 50;
+    [SerializeField] float startDelay = 3f;
     [SerializeField] float spawnDelay = 1.5f;
     [SerializeField] float badObjectChance = 0.2f;
     [SerializeField] float minX = -15f;
@@ -16,6 +17,11 @@ public class CatchableSpawner : MonoBehaviour
 
     float timer = 0;
     int objectCounter = 0;
+
+    private void Awake()
+    {
+        timer -= startDelay;
+    }
 
     private void Update()
     {

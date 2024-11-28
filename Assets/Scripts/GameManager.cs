@@ -51,7 +51,12 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        //Handle post-game logic
+        //Handle post-game failure logic
+    }
+
+    public void LevelComplete()
+    {
+        //Handle post-game success logic
     }
 
     public void LoadScene(int scene)
