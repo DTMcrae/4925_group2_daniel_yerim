@@ -14,7 +14,7 @@ public class CatchableSpawner : MonoBehaviour
     [SerializeField] ICatchable[] GoodCatchableObjects;
     [SerializeField] ICatchable[] BadCatchableObjects;
 
-    float timer = -5;
+    float timer = 0;
     int objectCounter = 0;
 
     private void Update()
