@@ -59,4 +59,11 @@ public class CatchableSpawner : MonoBehaviour
         newCatchable.transform.position = new Vector3(Random.Range(minX, maxX), newCatchable.transform.position.y);
     }
 
+    public void SetSpawnerProperties(float newSpawnDelay, float newBadObjectChance)
+    {
+        spawnDelay = newSpawnDelay;
+        badObjectChance = newBadObjectChance;
+        Debug.Log($"Spawner updated: SpawnDelay = {spawnDelay}, BadObjectChance = {badObjectChance}");
+    }
+
 }

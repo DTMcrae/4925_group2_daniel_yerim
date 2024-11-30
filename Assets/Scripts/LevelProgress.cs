@@ -18,12 +18,34 @@ public class LevelProgress : MonoBehaviour
         Invoke(nameof(HideText), 3f);
     }
 
-    public void LevelComplete()
+    public void LevelComplete(int level)
     {
         ShowText("LEVEL COMPLETE");
         spawner.enabled = false;
+        StartCoroutine(RestartSpawningAfterDelay(3f));
 
         //Do something?
+        //GameManager.Instance.HandleLevelComplete(level);
+        switch (level)
+        {
+            case 2:
+                spawner.SetSpawnerProperties(1.2f, 0.3f);
+                break;
+            case 3:
+                spawner.SetSpawnerProperties(0.9f, 0.5f);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private IEnumerator RestartSpawningAfterDelay(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        HideText();
+        spawner.enabled = true;
+        //GameManager.Instance.ResumeGame();
     }
 
     //Plays Game Over Animation
@@ -32,6 +54,12 @@ public class LevelProgress : MonoBehaviour
         ShowText("GAME OVER");
         spawner.enabled = false;
         StartCoroutine(EndGame(3f));
+    }
+
+    public void ShowGameCompletionMessage()
+    {
+        ShowText("CONGRATULATIONS! GAME COMPLETED!");
+        spawner.enabled = false;
     }
 
     //Actually Ends the Game

@@ -18,16 +18,22 @@ public class Authentication : MonoBehaviour
     [SerializeField] TMP_InputField usernameFieldSignup;
     [SerializeField] TMP_InputField passwordFieldSignup;
 
+    [System.Serializable]
+    public class ErrorResponse
+    {
+        public string message;
+    }
+
     public void LoginFunction()
     {
-        textDisplayLogin.text = "Button Pressed";
+        //textDisplayLogin.text = "Button Pressed";
 
         StartCoroutine(PostLogin());
     }
 
     public void SignupFunction()
     {
-        textDisplaySignup.text = "Button Pressed";
+        //textDisplaySignup.text = "Button Pressed";
 
         StartCoroutine(PostSignup());
     }
@@ -101,7 +107,18 @@ public class Authentication : MonoBehaviour
         }
         else
         {
-            textDisplaySignup.text = $"Signup failed: {request.error}";
+            //textDisplaySignup.text = $"Signup failed: {request.error}";
+
+            // Parse error response from the backend
+            try
+            {
+                var errorResponse = JsonUtility.FromJson<ErrorResponse>(request.downloadHandler.text);
+                textDisplaySignup.text = $"Signup failed: {errorResponse.message}";
+            }
+            catch
+            {
+                textDisplaySignup.text = $"Signup failed: {request.error}";
+            }
         }
     }
 
