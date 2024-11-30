@@ -680,6 +680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLives: 3
+  maxLevel: 4
 --- !u!1 &331006662
 GameObject:
   m_ObjectHideFlags: 0
