@@ -15,11 +15,14 @@ public class PlayerStatus : MonoBehaviour
     public int Score => score;
     public int Level => level;
 
+    AudioManager audioManager;
+
     private void Awake()
     {
         Instance = this;
         score = 0;
         lives = maxLives;
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     public void AdjustScore(int value)
@@ -42,6 +45,9 @@ public class PlayerStatus : MonoBehaviour
 
     private void GameOver()
     {
+        audioManager.StopMusic();
+        audioManager.PlaySFX(audioManager.death);
+
         LevelProgress.Instance.GameOver();
 
         GetComponent<PlayerMovement>().enabled = false;
@@ -50,6 +56,9 @@ public class PlayerStatus : MonoBehaviour
     private void LevelComplete()
     {
         level++;
+
+        audioManager.PlaySFX(audioManager.levelComplete);
+
         LevelProgress.Instance.LevelComplete(level);
         //GameManager.Instance.LevelComplete(level);
         GetComponent<PlayerMovement>().enabled = false;
