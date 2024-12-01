@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerStatus : MonoBehaviour
 {
     [SerializeField] int maxLives = 3;
-    [SerializeField] int maxLevel = 2;
+    [SerializeField] int maxLevel = 4;
 
     int lives = 0;
     int score = 0;
@@ -41,6 +41,14 @@ public class PlayerStatus : MonoBehaviour
 
         if (lives <= 0)
             GameOver();
+    }
+
+    public void SetLevelAndScore(int newLevel, int newScore)
+    {
+        level = newLevel;
+        score = newScore;
+
+        lives = maxLives;
     }
 
     private void GameOver()

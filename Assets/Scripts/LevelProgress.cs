@@ -25,17 +25,17 @@ public class LevelProgress : MonoBehaviour
         StartCoroutine(RestartSpawningAfterDelay(3f));
 
         //Do something?
-        //switch (level)
-        //{
-        //    case 2:
-        //        spawner.SetSpawnerProperties(1.2f, 0.3f);
-        //        break;
-        //    case 3:
-        //        spawner.SetSpawnerProperties(0.9f, 0.5f);
-        //        break;
-        //    default:
-        //        break;
-        //}
+        switch (level)
+        {
+            case 2:
+                spawner.SetSpawnerProperties(1.2f, 0.3f);
+                break;
+            case 3:
+                spawner.SetSpawnerProperties(0.9f, 0.5f);
+                break;
+            default:
+                break;
+        }
 
     }
 

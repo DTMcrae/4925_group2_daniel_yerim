@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
     private int userID = -1;
     private Progress[] savedProgress;
 
+    private int storedLevel = 1;
+    private int storedScore = 0;
+
     public string Username => username;
     public int UserID => userID;
 
@@ -45,9 +48,54 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         //Temporary Function, will be used once the game scene is loaded and ready to play
-        //SceneManager.LoadScene("New Scene");
         //StartCoroutine(LoadAfterWait("New Scene", 3.0f));
+        //SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("LevelMenu");
+    }
+
+    public void StartLevel(int level, int score)
+    {
+        storedLevel = level;
+        storedScore = score;
+
+        SceneManager.sceneLoaded += OnGameSceneLoaded;
+
         SceneManager.LoadScene("GameScene");
+    }
+
+    private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "GameScene")
+        {
+            // Restore player state
+            PlayerStatus.Instance.SetLevelAndScore(storedLevel, storedScore);
+
+            // Restore spawner state or other level-specific elements
+            if (spawner != null)
+            {
+                RestoreSpawnerState(storedLevel);
+            }
+
+            // Unsubscribe to avoid multiple calls
+            SceneManager.sceneLoaded -= OnGameSceneLoaded;
+        }
+    }
+
+    private void RestoreSpawnerState(int level)
+    {
+        switch (level)
+        {
+            case 2:
+                spawner.SetSpawnerProperties(1.2f, 0.3f);
+                break;
+            case 3:
+                spawner.SetSpawnerProperties(0.9f, 0.5f);
+                break;
+            default:
+                spawner.SetSpawnerProperties(1.0f, 0.5f);
+                break;
+        }
+        Debug.Log($"Spawner state restored for level {level}");
     }
 
     IEnumerator LoadAfterWait(string scene, float delay)
@@ -59,6 +107,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         //Handle post-game failure logic
+        StartCoroutine(LoadProgress());
         StartCoroutine(LoadAfterWait("GameOver", 3.0f));
     }
 
