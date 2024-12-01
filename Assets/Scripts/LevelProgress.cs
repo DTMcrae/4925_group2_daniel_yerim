@@ -2,6 +2,7 @@ using System.Collections;
 
 using UnityEngine;
 using TMPro;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class LevelProgress : MonoBehaviour
 {
@@ -61,9 +62,10 @@ public class LevelProgress : MonoBehaviour
         StartCoroutine(EndGame(3f));
     }
 
-    public void ShowGameCompletionMessage()
+    public void ShowGameCompletionMessage(int level, int score)
     {
         ShowText("CONGRATULATIONS! GAME COMPLETED!");
+        StartCoroutine(GameManager.Instance.UpdateProgress(level.ToString(), score, true));
         spawner.enabled = false;
     }
 

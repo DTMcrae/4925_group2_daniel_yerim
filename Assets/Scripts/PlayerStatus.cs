@@ -99,7 +99,7 @@ public class PlayerStatus : MonoBehaviour
     {
         audioManager.StopMusic();
         Debug.Log("Game Completed! Congratulations!");
-        LevelProgress.Instance.ShowGameCompletionMessage();
+        LevelProgress.Instance.ShowGameCompletionMessage(Level, Score);
         GetComponent<PlayerMovement>().enabled = false;
         GameManager.Instance.GameOver();
     }
