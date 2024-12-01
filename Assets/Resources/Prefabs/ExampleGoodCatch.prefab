@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreOnCatch: 30
+  goodParticle: {fileID: 8774521736427482663, guid: caad8b006f21f4bbbb36c04b3358424d, type: 3}
 --- !u!50 &2946596740065898781
 Rigidbody2D:
   serializedVersion: 5

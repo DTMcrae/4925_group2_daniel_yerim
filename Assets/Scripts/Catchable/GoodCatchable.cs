@@ -3,6 +3,7 @@ using UnityEngine;
 public class GoodCatchable : ICatchable
 {
     [SerializeField] int scoreOnCatch = 20;
+    [SerializeField] ParticleSystem goodParticle = null;
 
     AudioManager audioManager;
 
@@ -13,6 +14,9 @@ public class GoodCatchable : ICatchable
 
     public override void OnCatch()
     {
+        //goodParticle.Play();
+        Instantiate(goodParticle.gameObject, transform.position, Quaternion.identity);
+        
         audioManager.PlaySFX(audioManager.goodCatch);
         Debug.Log("You caught a good thing! Yay!");
         if (PlayerStatus.Instance)
