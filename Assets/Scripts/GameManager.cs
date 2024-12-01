@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
      */
     public static GameManager Instance;
     public CatchableSpawner spawner;
+    public Animator loadingAnimator;
 
     private string username = "";
     private int userID = -1;
@@ -50,7 +51,7 @@ public class GameManager : MonoBehaviour
         //Temporary Function, will be used once the game scene is loaded and ready to play
         //StartCoroutine(LoadAfterWait("New Scene", 3.0f));
         //SceneManager.LoadScene("GameScene");
-        SceneManager.LoadScene("LevelMenu");
+        LoadScene(1);
     }
 
     public void StartLevel(int level, int score)
@@ -60,24 +61,26 @@ public class GameManager : MonoBehaviour
 
         SceneManager.sceneLoaded += OnGameSceneLoaded;
 
-        SceneManager.LoadScene("GameScene");
+        LoadScene(1);
     }
 
     private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "GameScene")
         {
-            // Restore player state
-            PlayerStatus.Instance.SetLevelAndScore(storedLevel, storedScore);
-
-            // Restore spawner state or other level-specific elements
-            if (spawner != null)
-            {
-                RestoreSpawnerState(storedLevel);
-            }
-
-            // Unsubscribe to avoid multiple calls
             SceneManager.sceneLoaded -= OnGameSceneLoaded;
+            Invoke(nameof(InitializeLevel), 0.5f);
+        }
+    }
+
+    private void InitializeLevel()
+    {
+        PlayerStatus.Instance.SetLevelAndScore(storedLevel, storedScore);
+
+        // Restore spawner state or other level-specific elements
+        if (spawner != null)
+        {
+            RestoreSpawnerState(storedLevel);
         }
     }
 
@@ -98,22 +101,46 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Spawner state restored for level {level}");
     }
 
-    IEnumerator LoadAfterWait(string scene, float delay)
+    IEnumerator LoadAfterWait(int scene, float delay)
     {
         yield return new WaitForSeconds(delay);
-        SceneManager.LoadScene(scene);
+        StartCoroutine(LoadProgress());
+        LoadScene(scene);
     }
 
     public void GameOver()
     {
         //Handle post-game failure logic
-        StartCoroutine(LoadProgress());
-        StartCoroutine(LoadAfterWait("GameOver", 3.0f));
+        StartCoroutine(LoadAfterWait(2, 3.0f));
     }
+
+    AsyncOperation loadingOperation;
 
     public void LoadScene(int scene)
     {
-        //Handles what to do when a scene is loaded
+        StartCoroutine(LoadSceneAsync(scene));
+    }
+
+    private IEnumerator LoadSceneAsync(int scene)
+    {
+        Debug.Log("Loading Scene...");
+        loadingOperation = null;
+        loadingAnimator.SetBool("visible", true);
+
+        yield return new WaitForSeconds(2f);
+        Debug.Log("Delay passed.");
+
+        loadingOperation = SceneManager.LoadSceneAsync(scene);
+
+        while(!loadingOperation.isDone)
+        {
+            Debug.Log("Waiting for load to complete...");
+            yield return new WaitForEndOfFrame();
+        }
+        Debug.Log("Complete");
+
+        loadingAnimator.SetBool("visible", false);
+        //loadingOperation = null;
     }
 
     public Progress[] GetSavedProgress()
@@ -125,13 +152,12 @@ public class GameManager : MonoBehaviour
     {
         if(userID == -1)
         {
-            Debug.Log("User not logged in.");
+            Debug.LogError("User not logged in.");
             yield break;
         }
 
         string url = API.Base + "progress/loadprogress";
         WWWForm formData = new WWWForm();
-        Debug.Log("Url: (" + url + ")");
         formData.AddField("userId", userID);
 
         UnityWebRequest request = UnityWebRequest.Post(url, formData);
@@ -159,6 +185,45 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("Unsuccessful request");
+        }
+    }
+
+    public IEnumerator UpdateProgress(string level, int score, bool is_completed)
+    {
+        if (userID == -1)
+        {
+            Debug.LogError("User not logged in.");
+            yield break;
+        }
+
+        bool completionState = is_completed;
+
+        foreach(Progress p in savedProgress)
+        {
+            if(p.level.Equals(level))
+            {
+                completionState = (p.level_complete || is_completed);
+            }
+        }
+
+        string url = API.Base + "progress/saveprogress";
+        WWWForm formData = new WWWForm();
+
+        formData.AddField("userId", userID);
+        formData.AddField("level", level);
+        formData.AddField("high_score", score);
+        formData.AddField("level_complete", completionState.ToString());
+
+        UnityWebRequest request = UnityWebRequest.Post(url, formData);
+        yield return request.SendWebRequest();
+
+        if(request.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("Progress saved!");
+        }
+        else
+        {
+            Debug.Log("Error occured while saving progress");
         }
     }
 
