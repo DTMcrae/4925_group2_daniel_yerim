@@ -43,8 +43,9 @@ public class Authentication : MonoBehaviour
 
     public IEnumerator PostLogin()
     {
-        string url = "http://localhost:3030/login";
+        string url = API.Base + "auth/login";
         WWWForm formData = new WWWForm();
+        Debug.Log("Url: (" + url + ")");
         formData.AddField("username", usernameFieldLogin.text);
         formData.AddField("password", passwordFieldLogin.text);
 
@@ -78,7 +79,7 @@ public class Authentication : MonoBehaviour
 
     public IEnumerator PostSignup()
     {
-        string url = "http://localhost:3030/signup";
+        string url = API.Base + "/auth/signup";
         WWWForm formData = new WWWForm();
         formData.AddField("username", usernameFieldSignup.text);
         formData.AddField("password", passwordFieldSignup.text);
