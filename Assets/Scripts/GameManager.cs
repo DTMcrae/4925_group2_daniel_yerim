@@ -62,10 +62,14 @@ public class GameManager : MonoBehaviour
         StartCoroutine(LoadAfterWait("GameOver", 3.0f));
     }
 
-
     public void LoadScene(int scene)
     {
         //Handles what to do when a scene is loaded
+    }
+
+    public Progress[] GetSavedProgress()
+    {
+        return savedProgress;
     }
 
     public IEnumerator LoadProgress()
@@ -92,6 +96,7 @@ public class GameManager : MonoBehaviour
 
                 Debug.Log("Response: " + progressResponse.ToString());
                 savedProgress = progressResponse.progress;
+
                 foreach (var progress in progressResponse.progress)
                 {
                     Debug.Log($"Level: {progress.level}, High Score: {progress.high_score}, Completed: {progress.level_complete}");
