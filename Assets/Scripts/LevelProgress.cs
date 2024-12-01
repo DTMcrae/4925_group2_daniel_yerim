@@ -64,7 +64,7 @@ public class LevelProgress : MonoBehaviour
 
     public void ShowGameCompletionMessage(int level, int score)
     {
-        ShowText("CONGRATULATIONS! GAME COMPLETED!");
+        ShowText("CONGRATULATIONS! GAME COMPLETED!\n\nEndless Mode Unlocked!");
         StartCoroutine(GameManager.Instance.UpdateProgress(level.ToString(), score, true));
         spawner.enabled = false;
     }

@@ -15,9 +15,12 @@ public class LevelMenu : MonoBehaviour
     void Start()
     {
         Progress endless = null;
+        bool unlockedEndless = false;
 
         foreach(GameObject levelButton in levelButtons)
             levelButton.SetActive(false);
+
+        endlessButton.SetActive(false);
 
         Progress[] progress = GameManager.Instance.GetSavedProgress();
 
@@ -30,9 +33,12 @@ public class LevelMenu : MonoBehaviour
                 try
                 {
                     int levelNumber = int.Parse(p.level);
-                    if (levelNumber + 1 > levelButtons.Length) continue;
+                    if (levelNumber > levelButtons.Length) continue;
 
                     AddLevelCard(p.level, p.high_score, levelButtons[levelNumber-1]);
+
+                    if (levelNumber == levelButtons.Length && p.level_complete)
+                        unlockedEndless = true;
 
                     if (p.level_complete && levelNumber < levelButtons.Length)
                     {
@@ -44,6 +50,7 @@ public class LevelMenu : MonoBehaviour
                     if(p.level == "endless")
                     {
                         endless = p;
+                        unlockedEndless=true;
                     }
                 }
 
@@ -60,7 +67,7 @@ public class LevelMenu : MonoBehaviour
             AddLevelCard("1", 0, levelButtons[0]);
         }
 
-        if (levelButtons[levelButtons.Length - 1].activeSelf)
+        if (unlockedEndless)
         {
             int endlessScore = (endless != null) ? endless.high_score : 0;
             AddLevelCard("endless", endlessScore, endlessButton);
