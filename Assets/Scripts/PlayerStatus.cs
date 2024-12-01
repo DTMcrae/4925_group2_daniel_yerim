@@ -51,19 +51,25 @@ public class PlayerStatus : MonoBehaviour
         LevelProgress.Instance.GameOver();
 
         GetComponent<PlayerMovement>().enabled = false;
+        GameManager.Instance.GameOver();
     }
 
     private void LevelComplete()
     {
         level++;
 
-        audioManager.PlaySFX(audioManager.levelComplete);
+        if (level == maxLevel)
+        {
+            GameCompletion();
+        } else
+        {
+            audioManager.PlaySFX(audioManager.levelComplete);
 
-        LevelProgress.Instance.LevelComplete(level);
-        //GameManager.Instance.LevelComplete(level);
-        GetComponent<PlayerMovement>().enabled = false;
-        ResetLevelStatus();
-        GetComponent<PlayerMovement>().enabled = true;
+            LevelProgress.Instance.LevelComplete(level);
+            GetComponent<PlayerMovement>().enabled = false;
+            ResetLevelStatus();
+            GetComponent<PlayerMovement>().enabled = true;
+        }  
 
     }
 
@@ -73,10 +79,12 @@ public class PlayerStatus : MonoBehaviour
         lives = maxLives;
     }
 
-    //private void GameCompletion()
-    //{
-    //    Debug.Log("Game Completed! Congratulations!");
-    //    LevelProgress.Instance.ShowGameCompletionMessage();
-    //    GetComponent<PlayerMovement>().enabled = false;
-    //}
+    private void GameCompletion()
+    {
+        audioManager.StopMusic();
+        Debug.Log("Game Completed! Congratulations!");
+        LevelProgress.Instance.ShowGameCompletionMessage();
+        GetComponent<PlayerMovement>().enabled = false;
+        GameManager.Instance.GameOver();
+    }
 }

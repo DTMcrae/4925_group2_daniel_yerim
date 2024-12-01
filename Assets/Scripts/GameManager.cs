@@ -44,43 +44,18 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("GameScene");
     }
 
-    //IEnumerator LoadAfterWait(string scene, float delay)
-    //{
-    //    yield return new WaitForSeconds(delay);
-    //    SceneManager.LoadScene(scene);
-    //}
+    IEnumerator LoadAfterWait(string scene, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(scene);
+    }
 
     public void GameOver()
     {
         //Handle post-game failure logic
+        StartCoroutine(LoadAfterWait("GameOver", 3.0f));
     }
 
-    //public void LevelComplete(int level)
-    //{
-    //    LevelProgress.Instance.LevelComplete(level);
-    //}
-
-    //public void HandleLevelComplete(int level)
-    //{
-    //    spawner.enabled = false;
-
-    //    switch (level)
-    //    {
-    //        case 2:
-    //            spawner.SetSpawnerProperties(1.2f, 0.3f);
-    //            break;
-    //        case 3:
-    //            spawner.SetSpawnerProperties(0.9f, 0.5f);
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
-
-    //public void ResumeGame()
-    //{
-    //    spawner.enabled = true;
-    //}
 
     public void LoadScene(int scene)
     {

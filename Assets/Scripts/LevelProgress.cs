@@ -25,18 +25,17 @@ public class LevelProgress : MonoBehaviour
         StartCoroutine(RestartSpawningAfterDelay(3f));
 
         //Do something?
-        //GameManager.Instance.HandleLevelComplete(level);
-        switch (level)
-        {
-            case 2:
-                spawner.SetSpawnerProperties(1.2f, 0.3f);
-                break;
-            case 3:
-                spawner.SetSpawnerProperties(0.9f, 0.5f);
-                break;
-            default:
-                break;
-        }
+        //switch (level)
+        //{
+        //    case 2:
+        //        spawner.SetSpawnerProperties(1.2f, 0.3f);
+        //        break;
+        //    case 3:
+        //        spawner.SetSpawnerProperties(0.9f, 0.5f);
+        //        break;
+        //    default:
+        //        break;
+        //}
 
     }
 
@@ -45,7 +44,6 @@ public class LevelProgress : MonoBehaviour
         yield return new WaitForSecondsRealtime(delay);
         HideText();
         spawner.enabled = true;
-        //GameManager.Instance.ResumeGame();
     }
 
     //Plays Game Over Animation
