@@ -4,7 +4,7 @@ public class LoadRestart : MonoBehaviour
 {
     public void LoadScene()
     {
-        GameManager.Instance.StartLevel(1, 0);
+        GameManager.Instance.StartLevel(GameManager.Instance.LastLevel, 0);
     }
     
 }

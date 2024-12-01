@@ -34,7 +34,7 @@ public class PlayerStatus : MonoBehaviour
     {
         score += value;
 
-        if (score >= level * 200)
+        if (score >= level * 200 && level > 0)
         {
             LevelComplete();
         }

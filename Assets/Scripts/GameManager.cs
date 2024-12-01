@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
 
     public string Username => username;
     public int UserID => userID;
+    public int LastLevel => storedLevel;
 
     void Awake()
     {
@@ -59,9 +60,23 @@ public class GameManager : MonoBehaviour
         storedLevel = level;
         storedScore = score;
 
+        if(level == -1)
+        {
+            StartEndless();
+            return;
+        }
+
         SceneManager.sceneLoaded += OnGameSceneLoaded;
 
         LoadScene(1);
+    }
+
+    public void StartEndless()
+    {
+        storedLevel = -1;
+        storedScore = 0;
+
+        LoadScene(4);
     }
 
     private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -196,11 +211,13 @@ public class GameManager : MonoBehaviour
             yield break;
         }
 
+        string levelActual = level.Equals("-1") ? "endless" : level;
+
         bool completionState = is_completed;
 
         foreach(Progress p in savedProgress)
         {
-            if(p.level.Equals(level))
+            if(p.level.Equals(levelActual))
             {
                 completionState = (p.level_complete || is_completed);
             }
@@ -210,7 +227,7 @@ public class GameManager : MonoBehaviour
         WWWForm formData = new WWWForm();
 
         formData.AddField("userId", userID);
-        formData.AddField("level", level);
+        formData.AddField("level", levelActual);
         formData.AddField("high_score", score);
         formData.AddField("level_complete", completionState.ToString());
 

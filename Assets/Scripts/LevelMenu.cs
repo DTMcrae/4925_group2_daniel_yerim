@@ -7,12 +7,14 @@ public class LevelMenu : MonoBehaviour
 
     [Header("UI References")]
     [SerializeField] private Transform canvas;
+    [SerializeField] private GameObject endlessButton;
     [SerializeField] private GameObject[] levelButtons;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Progress endless = null;
 
         foreach(GameObject levelButton in levelButtons)
             levelButton.SetActive(false);
@@ -39,7 +41,10 @@ public class LevelMenu : MonoBehaviour
                 } 
                 catch
                 {
-                    //
+                    if(p.level == "endless")
+                    {
+                        endless = p;
+                    }
                 }
 
             }
@@ -53,6 +58,12 @@ public class LevelMenu : MonoBehaviour
         {
             Debug.Log("Defaulting to level 1");
             AddLevelCard("1", 0, levelButtons[0]);
+        }
+
+        if (levelButtons[levelButtons.Length - 1].activeSelf)
+        {
+            int endlessScore = (endless != null) ? endless.high_score : 0;
+            AddLevelCard("endless", endlessScore, endlessButton);
         }
     }
 
@@ -79,6 +90,11 @@ public class LevelMenu : MonoBehaviour
     {
         Debug.Log("Starting Level: " + level + " Score: " + score);
      
+        if(level == "endless")
+        {
+            GameManager.Instance.StartEndless();
+            return;
+        }
 
         int levelNumber = int.Parse(level);
 
