@@ -19,6 +19,11 @@ public class PlayerStatus : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null)
+        {
+            Destroy(Instance.gameObject);
+        }
+
         Instance = this;
         score = 0;
         lives = maxLives;
@@ -45,8 +50,11 @@ public class PlayerStatus : MonoBehaviour
 
     public void SetLevelAndScore(int newLevel, int newScore)
     {
+
         level = newLevel;
         score = newScore;
+
+        LevelProgress.Instance.SetLevel(level);
 
         lives = maxLives;
     }
@@ -56,7 +64,7 @@ public class PlayerStatus : MonoBehaviour
         audioManager.StopMusic();
         audioManager.PlaySFX(audioManager.death);
 
-        LevelProgress.Instance.GameOver();
+        LevelProgress.Instance.GameOver(level, score);
 
         GetComponent<PlayerMovement>().enabled = false;
         GameManager.Instance.GameOver();
@@ -73,7 +81,7 @@ public class PlayerStatus : MonoBehaviour
         {
             audioManager.PlaySFX(audioManager.levelComplete);
 
-            LevelProgress.Instance.LevelComplete(level);
+            LevelProgress.Instance.LevelComplete(level-1, score);
             GetComponent<PlayerMovement>().enabled = false;
             ResetLevelStatus();
             GetComponent<PlayerMovement>().enabled = true;

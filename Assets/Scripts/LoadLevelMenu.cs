@@ -5,6 +5,7 @@ public class LoadLevelMenu : MonoBehaviour
 {
     public void LoadScene()
     {
-        SceneManager.LoadScene("LevelMenu");
+        //SceneManager.LoadScene("LevelMenu");
+        GameManager.Instance.LoadScene(3);
     }
 }

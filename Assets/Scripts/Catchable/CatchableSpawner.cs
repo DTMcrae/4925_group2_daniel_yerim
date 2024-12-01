@@ -39,7 +39,7 @@ public class CatchableSpawner : MonoBehaviour
 
             objectCounter++;
 
-            if(objectCounter >= maxObjects)
+            if(objectCounter >= maxObjects && maxObjects >= 0)
             {
                 Debug.Log("Max Objects Reached");
                 enabled = false;

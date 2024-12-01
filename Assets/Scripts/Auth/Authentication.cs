@@ -64,7 +64,7 @@ public class Authentication : MonoBehaviour
                 textDisplayLogin.text = $"Welcome, {username} (ID: {userId})";
 
                 GameManager.Instance.SetUserDetails(username, int.Parse(userId));
-                GameManager.Instance.StartGame();
+                GameManager.Instance.LoadScene(3);
             }
             catch
             {
@@ -100,6 +100,7 @@ public class Authentication : MonoBehaviour
 
                 textDisplaySignup.text = $"Account created for {username} (ID: {userId})";
                 GameManager.Instance.SetUserDetails(username, int.Parse(userId));
+                GameManager.Instance.LoadScene(3);
             }
             catch
             {

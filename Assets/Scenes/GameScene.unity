@@ -680,7 +680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLives: 3
-  maxLevel: 2
+  maxLevel: 4
 --- !u!1 &331006662
 GameObject:
   m_ObjectHideFlags: 0
@@ -2127,6 +2127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawner: {fileID: 2024189051}
+  loadingAnimator: {fileID: 0}
 --- !u!1 &1429878879
 GameObject:
   m_ObjectHideFlags: 0
@@ -2685,7 +2686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d67fb93f65071e84a8271e88252312d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxObjects: 50
+  maxObjects: -1
   startDelay: 3
   spawnDelay: 1.5
   badObjectChance: 0.25

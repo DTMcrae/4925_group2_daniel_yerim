@@ -7,18 +7,15 @@ public class LevelMenu : MonoBehaviour
 
     [Header("UI References")]
     [SerializeField] private Transform canvas;
-    [SerializeField] private GameObject level1;
-    [SerializeField] private GameObject level2;
-    [SerializeField] private GameObject level3;
+    [SerializeField] private GameObject[] levelButtons;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
 
-        level1.SetActive(false);
-        level2.SetActive(false);
-        level3.SetActive(false);
+        foreach(GameObject levelButton in levelButtons)
+            levelButton.SetActive(false);
 
         Progress[] progress = GameManager.Instance.GetSavedProgress();
 
@@ -28,19 +25,21 @@ public class LevelMenu : MonoBehaviour
             {
                 Debug.Log($"Level: {p.level}, High Score: {p.high_score}, Completed: {p.level_complete}");
 
-                int levelNumber = int.Parse(p.level);
+                try
+                {
+                    int levelNumber = int.Parse(p.level);
+                    if (levelNumber + 1 > levelButtons.Length) continue;
 
-                if (levelNumber == 1)
+                    AddLevelCard(p.level, p.high_score, levelButtons[levelNumber-1]);
+
+                    if (p.level_complete && levelNumber < levelButtons.Length)
+                    {
+                        AddLevelCard((levelNumber + 1).ToString(), 0, levelButtons[levelNumber]);
+                    }
+                } 
+                catch
                 {
-                    AddLevelCard(p, level1);
-                }
-                else if (levelNumber == 2)
-                {
-                    AddLevelCard(p, level2);
-                }
-                else if (levelNumber == 3)
-                {
-                    AddLevelCard(p, level3);
+                    //
                 }
 
             }
@@ -49,24 +48,31 @@ public class LevelMenu : MonoBehaviour
         {
             Debug.LogError("No progress data found!");
         }
+
+        if (!levelButtons[0].activeSelf)
+        {
+            Debug.Log("Defaulting to level 1");
+            AddLevelCard("1", 0, levelButtons[0]);
+        }
     }
 
-    private void AddLevelCard(Progress progress, GameObject levelCardContainer)
+    private void AddLevelCard(string level, int score, GameObject levelCardContainer)
     {
-        GameObject levelCard = Instantiate(levelCardContainer, canvas);
+        GameObject levelCard = levelCardContainer;
+        Debug.Log("Enabling " + level);
 
         levelCard.SetActive(true);
 
         // Assign data to the UI elements in the card
         TMP_Text levelText = levelCard.transform.Find("Level").GetComponent<TMP_Text>();
         TMP_Text scoreText = levelCard.transform.Find("Score").GetComponent<TMP_Text>();
-        Button startButton = levelCard.transform.Find("StartButton").GetComponent<Button>();
+        Button startButton = levelCard.GetComponent<Button>();
 
-        levelText.text = "Level " + progress.level;
-        scoreText.text = "Score: " + progress.high_score;
+        levelText.text = "Level " + level;
+        scoreText.text = "High Score: " + score;
 
         // Add button functionality
-        startButton.onClick.AddListener(() => StartLevel(progress.level, progress.high_score));
+        startButton.onClick.AddListener(() => StartLevel(level, score));
     }
 
     private void StartLevel(string level, int score)
@@ -76,6 +82,6 @@ public class LevelMenu : MonoBehaviour
 
         int levelNumber = int.Parse(level);
 
-        GameManager.Instance.StartLevel(levelNumber, score);
+        GameManager.Instance.StartLevel(levelNumber, 0);
     }
 }
