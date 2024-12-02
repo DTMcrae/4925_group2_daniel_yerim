@@ -185,8 +185,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280654060
-  m_fontColor: {r: 0.9254902, g: 0.59607846, b: 0.14509805, a: 1}
+    rgba: 4281676586
+  m_fontColor: {r: 0.16470589, g: 0.2, b: 0.20784314, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1186,7 +1186,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.9150943, g: 0.68441814, b: 0.43596473, a: 1}
+  m_Color: {r: 0.95686275, g: 0.8784314, b: 0.6862745, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1883,8 +1883,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280654060
-  m_fontColor: {r: 0.9254902, g: 0.59607846, b: 0.14509805, a: 1}
+    rgba: 4281676586
+  m_fontColor: {r: 0.16470589, g: 0.2, b: 0.20784314, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2346,8 +2346,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280654060
-  m_fontColor: {r: 0.9254902, g: 0.59607846, b: 0.14509805, a: 1}
+    rgba: 4281676586
+  m_fontColor: {r: 0.16470589, g: 0.2, b: 0.20784314, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2512,8 +2512,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280654060
-  m_fontColor: {r: 0.9254902, g: 0.59607846, b: 0.14509805, a: 1}
+    rgba: 4281676586
+  m_fontColor: {r: 0.16470589, g: 0.2, b: 0.20784314, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
