@@ -79,7 +79,7 @@ public class Authentication : MonoBehaviour
 
     public IEnumerator PostSignup()
     {
-        string url = API.Base + "/auth/signup";
+        string url = API.Base + "auth/signup";
         WWWForm formData = new WWWForm();
         formData.AddField("username", usernameFieldSignup.text);
         formData.AddField("password", passwordFieldSignup.text);
